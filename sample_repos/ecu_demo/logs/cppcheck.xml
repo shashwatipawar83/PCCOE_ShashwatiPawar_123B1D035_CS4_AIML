@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<results version="2"><errors>
+  <error id="nullPointerOutOfMemory" severity="error" msg="If memory allocation fails, then there is a possible null pointer dereference: s" cwe="476">
+    <location file="src/can_rx.c" line="29" column="5"/></error>
+  <error id="constParameterPointer" severity="style" msg="Parameter 'sig' can be declared as pointer to const">
+    <location file="src/can_rx.c" line="22" column="30"/></error>
+</errors></results>

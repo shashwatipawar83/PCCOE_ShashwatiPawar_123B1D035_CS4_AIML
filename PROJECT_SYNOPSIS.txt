@@ -1,0 +1,231 @@
+PROJECT SYNOPSIS
+================
+
+PROJECT TITLE
+AI-Assisted Secure Code Review for ECU Software
+
+STUDENT DETAILS
+Student name(s):       ________________________________________________
+Roll / registration:   ________________________________________________
+Department / program:  ________________________________________________
+Institution:           ________________________________________________
+Academic year:         ________________________________________________
+Project guide:         ________________________________________________
+
+1. INTRODUCTION AND BACKGROUND
+------------------------------
+Electronic Control Units (ECUs) are embedded computing systems used to
+control and monitor functions in vehicles and other engineered products.
+Their software must be dependable because faults can affect system
+availability, safety, and security. Reviewing this software involves
+examining source code, diagnostic information, and applicable coding
+guidance.
+
+Secure code review is a systematic way to identify and assess possible
+software defects and security weaknesses. AI-based tools can help organize
+information and explain code, but their results can be incomplete or
+incorrect. This project explores an assistant that combines automated
+checks with AI-supported explanations while keeping review decisions under
+human control.
+
+2. STATEMENT OF THE PROBLEM
+---------------------------
+Reviewers may need to correlate potential source-code issues with build or
+static-analysis messages, runtime diagnostics, and project-specific
+guidance. When this information is considered separately, review can be
+time-consuming, and it may be difficult to understand why an issue was
+reported or preserve the decision made about it.
+
+The project addresses the need for a review-support approach that presents
+potential issues with relevant context, assists users in understanding
+diagnostic information, and supports a traceable human review process.
+Automated or AI-generated results must not be treated as proof that a
+defect exists or that software is compliant.
+
+3. REVIEW OF LITERATURE
+-----------------------
+Bacchelli and Bird's study of modern code review describes review as a
+collaborative activity with outcomes and challenges beyond merely finding
+defects. This supports the project's focus on presenting understandable
+results and retaining reviewer decisions rather than treating automated
+detection as the whole review process [1].
+
+The NIST Secure Software Development Framework recommends integrating
+security practices throughout the software development life cycle. It
+provides a broader secure-development context for tools that help identify
+and communicate potential software weaknesses [2].
+
+The NIST Artificial Intelligence Risk Management Framework provides
+guidance for managing risks associated with AI systems. It is relevant to
+this project because AI-generated explanations are advisory and require
+appropriate validation, oversight, and disclosure of limitations [3].
+
+The OWASP GenAI Security Project documents security risks associated with
+large language model applications. Its guidance is relevant to the
+project's consideration of untrusted repository content and the risk that
+such content may influence an AI assistant [4].
+
+Together, these sources motivate a human-centred review workflow, secure
+software practices, and careful handling of AI limitations. They do not
+establish that this project is certified, compliant with a standard, or
+effective on all software.
+
+4. OBJECTIVES
+-------------
+1. Identify selected potential security, reliability, and maintainability
+   issues in ECU-oriented demonstration software.
+2. Assist users in understanding example compiler, static-analysis, and
+   runtime diagnostic information.
+3. Provide project-aware answers and explanations with references to
+   relevant source material.
+4. Support review decisions in a way that is understandable and traceable.
+5. Assess the demonstration using repeatable tests and questions with
+   predefined expected source locations.
+6. Document observed results, limitations, and areas for improvement.
+
+5. HYPOTHESIS AND RESEARCH QUESTIONS
+------------------------------------
+This project uses exploratory research questions rather than a
+confirmatory statistical hypothesis, because the evaluation uses a small
+synthetic demonstration set.
+
+RQ1. Can the assistant identify selected, deliberately seeded issues in the
+     ECU demonstration source files?
+
+RQ2. Can it associate supplied diagnostic-log examples with relevant source
+     locations and potential causes?
+
+RQ3. How often does offline repository question answering place the
+     expected source function in its top-ranked citation for the five
+     evaluated questions?
+
+RQ4. Does the demonstration preserve human oversight by presenting results
+     for review rather than automatically changing source code?
+
+6. RESEARCH METHODOLOGY
+-----------------------
+Study design:
+An exploratory functional evaluation of a software prototype. The work
+combines automated software tests with a small, manually prepared set of
+questions and expected answers. The evaluation is descriptive and is not
+designed to support statistical generalization.
+
+Data sources and sample:
+- One synthetic ECU demonstration repository.
+- Five source files were scanned in the recorded offline review.
+- Example compiler, cppcheck, and AddressSanitizer log files were used for
+  diagnostic interpretation tests.
+- One project-specific ECU coding-guideline document was used as the
+  knowledge source.
+- Five manually authored repository questions were evaluated. Each question
+  had an expected source function and file.
+- Fifteen automated tests exercised review, access control, log mapping,
+  prompt-injection handling, citations, dispositions, and audit behavior.
+
+Procedure:
+1. Run the automated test suite against an isolated application instance.
+2. Perform an offline review of the demonstration repository.
+3. Compare each question's top-ranked citation against its expected function
+   and source file.
+4. Submit the example sanitizer log and compare its reported location and
+   cause with the seeded source issue.
+5. Summarize outcomes using test pass counts, finding counts, and top-ranked
+   citation match rates.
+
+Analysis method:
+Automated tests are reported as passed or failed. Question-answer retrieval
+is scored using exact top-1 matches: a function match requires both the
+expected file and expected function to be the first citation; file match
+requires the expected file to be the first citation. Review findings and
+diagnostic mappings are described as observed outputs. Precision, recall,
+and statistical significance are not calculated because an independently
+labelled benchmark and sufficiently large sample are not available.
+
+Model condition:
+The reported evaluation was conducted offline using the project's
+hash-768 lexical feature-hashing embedder. It did not use pretrained
+language-model inference or a pretrained embedding model. The project has
+an optional Ollama configuration, but this is not evidence that a pretrained
+model was used in these evaluation results.
+
+7. SCOPE AND LIMITATIONS
+------------------------
+The project focuses on a demonstration of code-review support for
+ECU-oriented software. It covers selected source-code checks, interpretation
+of sample diagnostic logs, project-aware question answering, supporting
+context, and human review of reported findings.
+
+The evaluation is limited to one synthetic repository, five source files,
+five retrieval questions, and a small set of example logs. Its outcomes
+cannot establish performance on production vehicle software or other
+repositories. Automated checks are heuristic and may miss defects or report
+false positives. Retrieval rankings may be incorrect. AI responses, when
+enabled, may be inaccurate and must be reviewed by a person.
+
+The project does not claim formal safety or security certification, MISRA
+compliance, complete defect detection, or replacement of qualified
+engineering review and established verification tools.
+
+8. EXPECTED OUTCOMES AND SIGNIFICANCE
+-------------------------------------
+The expected outcome is a demonstration assistant that helps organize
+secure code review and debugging tasks, presents potential issues with
+supporting context, and records human review outcomes.
+
+In the recorded evaluation, the automated suite reported 15 passing tests.
+The offline review scanned five source files and reported 17 findings.
+For the five manually prepared retrieval questions, two top citations
+matched the expected function and three matched the expected file. These
+small-sample results are descriptive and must not be interpreted as
+general accuracy estimates. The mismatches indicate that citations require
+human verification.
+
+The project is significant as an exploration of how AI assistance can
+support—rather than replace—human review. It also demonstrates the
+importance of reporting limitations and evaluating evidence instead of
+assuming that an AI-generated answer is correct.
+
+9. REFERENCES / BIBLIOGRAPHY
+----------------------------
+[1] A. Bacchelli and C. Bird, "Expectations, outcomes, and challenges of
+    modern code review," Proceedings of the 2013 International Conference
+    on Software Engineering (ICSE), 2013, pp. 712-721.
+    DOI: https://doi.org/10.1109/ICSE.2013.6606617
+
+[2] M. Souppaya, K. Scarfone, and D. Dodson, Secure Software Development
+    Framework (SSDF) Version 1.1: Recommendations for Mitigating the Risk
+    of Software Vulnerabilities, NIST Special Publication 800-218,
+    February 2022.
+    https://doi.org/10.6028/NIST.SP.800-218
+
+[3] National Institute of Standards and Technology, Artificial Intelligence
+    Risk Management Framework (AI RMF 1.0), NIST AI 100-1, January 2023.
+    https://doi.org/10.6028/NIST.AI.100-1
+
+[4] OWASP GenAI Security Project, Top 10 for Large Language Model
+    Applications project resources.
+    https://owasp.org/projects/top-10-for-large-language-model-applications/
+    Accessed 13 October 2026.
+
+10. FACULTY REVIEW AND APPROVAL
+-------------------------------
+Faculty guide: ________________________________________________________
+
+Comments:
+_______________________________________________________________________
+_______________________________________________________________________
+
+Faculty signature: _______________________________  Date: ____________
+
+Department approval (if required): ___________________________________
+
+Signature: _______________________________________  Date: ____________
+
+STUDENT DECLARATION
+I declare that this synopsis describes the project undertaken by the
+student(s) named below. I will identify and acknowledge external material
+used in the project in accordance with institutional requirements.
+
+Student name(s): _____________________________________________________
+
+Student signature(s): ____________________________  Date: ____________

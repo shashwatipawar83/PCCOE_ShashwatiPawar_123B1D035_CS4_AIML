@@ -1,0 +1,6 @@
+make: Entering directory '/build/ecu_demo'
+src/can_rx.c:16:9: warning: array subscript 8 is above array bounds of 'uint8_t[8]' [-Warray-bounds]
+src/can_rx.c:46:9: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+src/diag_session.c:7:19: warning: unused variable 'tmp' [-Wunused-variable]
+/tmp/other/unknown.c:3:1: warning: something unrelated [-Wall]
+src/calib/secret_cal.c:2:1: warning: 'CAL_PASSWORD' defined but not used [-Wunused-const-variable]

@@ -1,0 +1,35 @@
+# One-time model pull needs internet:  docker compose --profile pull run --rm ollama-pull
+# After that the `internal` network has NO route to the outside world, so code can't leave.
+services:
+  api:
+    build: .
+    environment:
+      SCR_LLM_BACKEND: ollama
+      SCR_LLM_URL: http://ollama:11434
+      SCR_LLM_MODEL: ${SCR_LLM_MODEL:-llama3.1:8b}
+      SCR_REPO_ROOT: /repos
+      SCR_DATA_DIR: /data
+      SCR_ALLOWED_HOSTS: ollama,localhost,127.0.0.1
+    volumes: ["./sample_repos:/repos:ro", "scr-data:/data"]
+    ports: ["127.0.0.1:8000:8000"]
+    networks: [internal, frontend]
+  ui:
+    build: .
+    command: streamlit run ui/streamlit_app.py --server.port 8501 --server.address 0.0.0.0
+    environment: { SCR_API_URL: http://api:8000 }
+    ports: ["127.0.0.1:8501:8501"]
+    networks: [frontend]
+    depends_on: [api]
+  ollama:
+    image: ollama/ollama:latest
+    volumes: ["ollama:/root/.ollama"]
+    networks: [internal]
+  ollama-pull:
+    image: ollama/ollama:latest
+    profiles: [pull]
+    entrypoint: ["sh", "-c", "ollama serve & sleep 5 && ollama pull ${SCR_LLM_MODEL:-llama3.1:8b}"]
+    volumes: ["ollama:/root/.ollama"]
+networks:
+  internal: { internal: true }   # api <-> ollama only; no egress
+  frontend: {}
+volumes: { scr-data: {}, ollama: {} }
