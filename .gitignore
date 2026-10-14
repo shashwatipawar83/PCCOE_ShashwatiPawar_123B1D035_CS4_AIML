@@ -4,6 +4,10 @@ venv/
 .env
 .env.*
 !.env.example
+DATASET_PROVENANCE.txt
+EVALUATION_EVIDENCE.txt
+TECHNICAL_REPORT.txt
+PROJECT_SYNOPSIS.txt
 __pycache__/
 .pytest_cache/
 *.pyc
